@@ -76,6 +76,8 @@ public class MetroSimulator{
 
 
         //connect the other stations here
+        va_square.makeEnd();
+        smithsonian.makeEnd();
 
         return va_square;
 
@@ -84,11 +86,13 @@ public class MetroSimulator{
     public static EndStation makeRedLine(){
         woodley_park.connect(dupont_circle);
         dupont_circle.connect(farragut_north);
-        farragut_north.connect(metro_center);
-        metro_center.connect(gallery_place);
+        metro_center.addTransferStationPrev(farragut_north);
+        metro_center.addTransferStationNext(gallery_place);
         gallery_place.connect(judiciary_square);
 
         //connect the other stations here
+        woodley_park.makeEnd();
+        judiciary_square.makeEnd();
 
         return woodley_park;
     }
@@ -96,11 +100,13 @@ public class MetroSimulator{
     public static EndStation makePurpleLine(){
         s1.connect(s2);
         s2.connect(s3);
-        s3.connect(metro_center);
-        metro_center.connect(s4);
+        metro_center.addTransferStationPrev(s3);
+        metro_center.addTransferStationNext(s4);
         s4.connect(s5);
 
         //connect the other stations here
+        s1.makeEnd();
+        s5.makeEnd();
 
         return s1;
     }

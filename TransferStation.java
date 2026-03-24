@@ -1,15 +1,17 @@
 import java.util.*;
 public class TransferStation extends Station{
-    ArrayList<Station> otherStations = new ArrayList<Station>();
+    public ArrayList<Station> otherStations = new ArrayList<Station>();
     public TransferStation(String line, String name){
         super(line, name);
         type = "TRANSFERSTATION ";
     }
     public void addTransferStationPrev(Station s){
-        this.otherStations.add(0, s);
+        otherStations.add(s);
+        s.next = this;
     }
     public void addTransferStationNext(Station s){
-        this.otherStations.add(s);
+        otherStations.add(s);
+        s.prev = this;
     }
     public String getOtherStations(){
         String k = "";

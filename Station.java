@@ -24,9 +24,16 @@ public class Station {
     }
     public void addPrev(Station prev) {
         this.prev = prev;
+        if (prev.next == null) {
+            prev.next = this;
+        }
     }
     public void addNext(Station next) {
         this.next = next;
+        if(next.prev == null) {
+            next.prev = this;
+        }
+
     }
     public void makeEnd(){
         if (next != null && prev == null) {
@@ -46,8 +53,12 @@ public class Station {
     public void switchAvailable(){
         this.inService = !this.inService;
     }
-    public boolean equals(Station s){
-        return this == s;
+    public boolean equals(Object s){
+        if (!(s instanceof Station)) {
+            return false;
+        }
+        Station s1 = (Station) s;
+        return s1.getName().equals(this.getName()) && s1.getLineColor().equals(this.getLineColor());
     }
     public String toString(){
         if (prev == null){
