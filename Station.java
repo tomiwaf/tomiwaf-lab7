@@ -1,3 +1,4 @@
+import java.util.*;
 public class Station {
     protected String name;
     protected String lineColor;
@@ -46,7 +47,49 @@ public class Station {
         addNext(s);
         s.addPrev(this);
     }
-    public int tripLength(Station s){
+    public int tripLength(Station t){
+        if (this == t){
+            return 0;
+        }
+        ArrayList<Station> queue = new ArrayList<Station>();
+        ArrayList<Station> visited = new ArrayList<Station>();
+        queue.add(this);
+        visited.add(this);
+        int distance = 0;
+
+        while (!queue.isEmpty()){
+            int size = queue.size();
+            distance++;
+            for (int i = 0; i < size; i++) {
+                Station current = queue.remove(0);
+
+                if (current.next != null && !visited.contains(current.next)){
+                    if (current.next.equals(t)){
+                        return distance;
+                    }
+                    visited.add(current.next);
+                    queue.add(current.next);
+                }
+                if (current.prev != null && !visited.contains(current.prev)){
+                    if (current.prev.equals(t)){
+                        return distance;
+                    }
+                    visited.add(current.prev);
+                    queue.add(current.prev);
+                }
+                if (current instanceof TransferStation){
+                    for(Station s : ((TransferStation) current).otherStations){
+                        if (!visited.contains(s)){
+                            if (s.equals(t)){
+                                return distance;
+                            }
+                            visited.add(s);
+                            queue.add(s);
+                        }
+                    }
+                }
+            }
+        }
         return -1;
 
     }
